@@ -1,36 +1,33 @@
 #include <iostream>
-//#include "chocolate_boiler.h"
-#include "automaton.h"
-#include <thread>
-/*ChocolateBoiler* ChocolateBoiler::_instance = nullptr;
-
-void First(){
-    ChocolateBoiler* forFirst = ChocolateBoiler::GetInstance();
-}
-
-void Second(){
-    ChocolateBoiler* forSecond = ChocolateBoiler::GetInstance();
-}
-*/
-
-
+#include "pizzafactory.h"
+#include "command.h"
+#include "decorator.h"
 int main()
 {
+   Visitor visitor;
 
-    /*
-     std::cout<<"first:"<<std::endl;
-    First();
-    std::cout<<"second:"<<std::endl;
-    Second();
-    std::cout<<"-------------------"<<std::endl;
-    */
-    /*std::thread th1(First);
-    std::thread th2(Second);
+   BakePepperoniPizza peperoniBakery;
+   BakeGreekPizza greekBakery;
+   BakeCheesePizza cheeseBakery;
 
-    th1.join();
-    th2.join();*/
+   visitor.addPizza(peperoniBakery);
+   visitor.addPizza(cheeseBakery);
+   visitor.addPizza(greekBakery);
+
+   visitor.getOrderInfo();
 
 
 
-   return 0;
+   LightPlayer lightPlayer;
+   lightPlayer.Add(Colors::BLUE);
+   lightPlayer.Add(Colors::VIOLET);
+   lightPlayer.Add(Colors::ORANGE);
+   lightPlayer.Undo();
+
+   Espresso es1;
+   AddMilk em(&es1);
+   NoSugar mse(&em);
+   std::cout<<mse.getDescription()<<std::endl;
+   std::cout<<es1.cost()<<" +milk  "<<em.cost()<<" -sugar "<<mse.cost()<<std::endl;
+    return 0;
 }
