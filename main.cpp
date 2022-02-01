@@ -1,33 +1,41 @@
 #include <iostream>
-#include "pizzafactory.h"
-#include "command.h"
-#include "decorator.h"
+#include "strategy.h"
+#include "adapter.h"
+#include "iterator.h"
 int main()
 {
-   Visitor visitor;
+   /* TextEditor text_editor("  ");
 
-   BakePepperoniPizza peperoniBakery;
-   BakeGreekPizza greekBakery;
-   BakeCheesePizza cheeseBakery;
+    DivideByScreenWidth* divide_by_screen_width = new DivideByScreenWidth;
+    DivideBySentence* divide_by_sentence = new DivideBySentence;
+    DivideByUserWidth* divide_by_user_width = new DivideByUserWidth;
 
-   visitor.addPizza(peperoniBakery);
-   visitor.addPizza(cheeseBakery);
-   visitor.addPizza(greekBakery);
-
-   visitor.getOrderInfo();
+    text_editor.SetDivideStrategy(divide_by_screen_width);
+    text_editor.SetWigth(100);
+    text_editor.Divide();
 
 
+    Figure figure(10,10);
+    Text text("text",10,0,false);
 
-   LightPlayer lightPlayer;
-   lightPlayer.Add(Colors::BLUE);
-   lightPlayer.Add(Colors::VIOLET);
-   lightPlayer.Add(Colors::ORANGE);
-   lightPlayer.Undo();
+    Figure* textAdapter = new TextAdapter(text);
 
-   Espresso es1;
-   AddMilk em(&es1);
-   NoSugar mse(&em);
-   std::cout<<mse.getDescription()<<std::endl;
-   std::cout<<es1.cost()<<" +milk  "<<em.cost()<<" -sugar "<<mse.cost()<<std::endl;
+    figure.flip();
+    text.reverse();
+    textAdapter->flip();
+*/
+
+    MyContainer<int> cntr;
+
+    for (auto i = 0; i < 5; i++) {
+        cntr.Add(i);
+
+
+    }
+
+    myIterator<int> *it = cntr.createIterator();
+    for( it->begin();it->end(); it++)
+            std::cout<<  it->data()<<" ";
+std::cout<<std::endl;
     return 0;
 }
