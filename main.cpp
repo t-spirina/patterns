@@ -1,37 +1,18 @@
-#include <iostream>
-#include "facade.h"
-#include "visitor.h"
-#include "observer.h"
-
-int main()
+#include <QCoreApplication>
+#include "momento.h"
+#include "pimpl.h"
+int main(int argc, char *argv[])
 {
+    QCoreApplication a(argc, argv);
+    Player p(1.2,3,"PLAYER1");
 
-  std::cout<<"------ facade -----"<<std::endl;
-  FacadeForMediaPlayer mp;
-  mp.OnAndPlay("1 film");
-  mp.ChangeMovie("2 film");
-  mp.Off();
+    Momento m=p.createMomento();
+    p.changeSpeed(-1);
+    std::cout<<"1 speed= "<<p.getSpeed()<<std::endl;
+    p.reinstateMomento(m);
+    std::cout<<"2 speed= "<<p.getSpeed()<<std::endl;
 
-  std::cout<<"------ observer -----"<<std::endl;
-  Herald* hrld = new Herald;
-  Doctor* doc = new Doctor(*hrld);
-  Child* cld = new Child(*hrld);
-  Blacksmith* blm = new Blacksmith(*hrld);
-  hrld->makeAnnouncement();
-  hrld->setVoicePower(50);
-  hrld->setAnnouncement("first message");
-  hrld->makeAnnouncement();
-
-  std::cout<<"------ visitor -----"<<std::endl;
-  Ingredient* potato = new Ingredient;
-  MenuItem *boild_potato = new MenuItem("boid potato","-",5.5);
-  MenuInfo *newInfo = new MenuInfo;
-  boild_potato->add(potato);
-  potato->SetInfo("potato",5,2.0,0,0.1,0);
-  Ingredient* butter = new Ingredient;
-  butter->SetInfo("butter",1,20.0,10,0.1,10);
-  boild_potato->add(butter);
-  newInfo->visit(boild_potato);
-  //newInfo->visit(potato);
-  return 0;
+    PlayerPimpl pimpl(1.2,3,"PLAYER2");
+    std::cout<< (pimpl.getName()).toStdString() <<std::endl;
+    return a.exec();
 }
