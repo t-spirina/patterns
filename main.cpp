@@ -1,18 +1,32 @@
-#include <QCoreApplication>
-#include "momento.h"
-#include "pimpl.h"
-int main(int argc, char *argv[])
+#include <iostream>
+#include "composite.h"
+#include "mediator.h"
+#include "template.h"
+int main()
 {
-    QCoreApplication a(argc, argv);
-    Player p(1.2,3,"PLAYER1");
 
-    Momento m=p.createMomento();
-    p.changeSpeed(-1);
-    std::cout<<"1 speed= "<<p.getSpeed()<<std::endl;
-    p.reinstateMomento(m);
-    std::cout<<"2 speed= "<<p.getSpeed()<<std::endl;
+    std::cout<<"------- composite -----------"<<std::endl;
+    CompositeEat* BusinessLunch = CreateBusinessLunchMenu();
+    std::cout<<"Business Lunch menu: \n"<<BusinessLunch->GetName()<<std::endl;
+    std::cout<<"Price: "<<BusinessLunch->GetPrice()<<std::endl;
 
-    PlayerPimpl pimpl(1.2,3,"PLAYER2");
-    std::cout<< (pimpl.getName()).toStdString() <<std::endl;
-    return a.exec();
+    std::cout<<std::endl<<"------- mediator -----------"<<std::endl;
+    Calendar* calendar = new Calendar(3);
+    Gadget* alarm = new Alarm(calendar);
+    Gadget* coffee = new Coffee(calendar);
+    Gadget* teapot = new TeaPot(calendar);
+
+    calendar->add(alarm);
+    calendar->add(coffee);
+    calendar->add(teapot);
+    calendar->StartDay();
+
+    delete calendar;
+
+    std::cout<<std::endl<<"------- template -----------"<<std::endl;
+    BitmapImage* bmp = new BitmapImage();
+    VectorImage* vmp = new VectorImage();
+    bmp->DrawFromFile("file1");
+    vmp->DrawFromFile("file2");
+    return 0;
 }
