@@ -1,32 +1,24 @@
 #include <iostream>
-#include "composite.h"
-#include "mediator.h"
-#include "template.h"
+#include "state.h"
+#include "prototype.h"
+#include <vector>
+
+
 int main()
 {
+    std::vector<Prototype*> Monsters;
+    Monsters.push_back(new Monster(10,5,2,"type1"));
+    Monsters.push_back((Monsters[0])->Clone() );
+    std::cout<< Monsters[0]->getType() << "  "<< Monsters[1]->getType() <<std::endl;
 
-    std::cout<<"------- composite -----------"<<std::endl;
-    CompositeEat* BusinessLunch = CreateBusinessLunchMenu();
-    std::cout<<"Business Lunch menu: \n"<<BusinessLunch->GetName()<<std::endl;
-    std::cout<<"Price: "<<BusinessLunch->GetPrice()<<std::endl;
-
-    std::cout<<std::endl<<"------- mediator -----------"<<std::endl;
-    Calendar* calendar = new Calendar(3);
-    Gadget* alarm = new Alarm(calendar);
-    Gadget* coffee = new Coffee(calendar);
-    Gadget* teapot = new TeaPot(calendar);
-
-    calendar->add(alarm);
-    calendar->add(coffee);
-    calendar->add(teapot);
-    calendar->StartDay();
-
-    delete calendar;
-
-    std::cout<<std::endl<<"------- template -----------"<<std::endl;
-    BitmapImage* bmp = new BitmapImage();
-    VectorImage* vmp = new VectorImage();
-    bmp->DrawFromFile("file1");
-    vmp->DrawFromFile("file2");
+    StateContext* pCoffeeMashine = new StateContext(new Start());
+        if (pCoffeeMashine != nullptr)
+        {
+            pCoffeeMashine->next();
+            pCoffeeMashine->next();
+            pCoffeeMashine->next();
+            pCoffeeMashine->next();
+            delete pCoffeeMashine;
+        }
     return 0;
 }
